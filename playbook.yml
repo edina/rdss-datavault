@@ -8,8 +8,9 @@
     projects:
 
       - name: "JISC DataVault project"
-        repo: "https://github.com/DataVault/datavault"
-        version: "master"
+        repo: "https://github.com/JiscRDSS/datavault"
+        #version: "master"
+        version: "rdss"
         dest: "./src/datavault"
         images:
           - name: "{{ registry }}/broker"
