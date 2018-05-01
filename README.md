@@ -12,7 +12,11 @@ $ make help
 build-images                   Build Docker images.
 clone                          Clone source code repositories.
 help                           Print this help message.
+login                          Login to registry.
+publish                        Publish Docker images to a registry.
 ```
+
+You must run `make login` before you can run `make publish`.
 
 ## AWS environment
 

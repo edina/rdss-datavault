@@ -1,11 +1,14 @@
+ENV ?= qa
+
+REGION ?= eu-west-1
+
+REGISTRY ?= 400079346860.dkr.ecr.eu-west-1.amazonaws.com/rdss-datavault
+
+VERSION ?= $(shell git describe --tags --always --dirty)
+
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 ANSIBLE_PLAYBOOK := $(shell command -v ansible-playbook 2> /dev/null)
-
-# We always want our build to run in non-Jisc mode, i.e. QA mode
-ENV ?= qa
-
-VERSION ?= $(shell git describe --tags --always --dirty)
 
 check-ansible-playbook:
 ifndef ANSIBLE_PLAYBOOK
@@ -16,12 +19,23 @@ build: build-images
 
 clone: check-ansible-playbook  ## Clone source code repositories.
 	ansible-playbook \
+		--extra-vars="env=$(ENV) registry=$(REGISTRY) rdss_version=$(VERSION)" \
 		--tags=clone \
 			$(ROOT_DIR)/playbook.yml
 
 build-images: check-ansible-playbook  ## Build Docker images.
 	ansible-playbook \
+		--extra-vars="env=$(ENV) registry=$(REGISTRY) rdss_version=$(VERSION)" \
 		--tags=clone,build \
+			$(ROOT_DIR)/playbook.yml
+
+login:  ## Login to registry.
+	./ecr-login.sh
+
+publish: check-ansible-playbook  ## Publish Docker images to a registry.
+	ansible-playbook \
+		--extra-vars="env=$(ENV) registry=$(REGISTRY) rdss_version=$(VERSION)" \
+		--tags=clone,build,publish \
 			$(ROOT_DIR)/playbook.yml
 
 help:  ## Print this help message.
