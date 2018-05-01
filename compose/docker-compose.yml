@@ -55,6 +55,23 @@ services:
     depends_on:
       - rabbitmq
 
+  broker:
+    build:
+      context: ../src/datavault/
+      dockerfile: broker.Dockerfile
+    volumes:
+      - datavault_active_data:/tmp/datavault/active:rw
+      - datavault_archive_data:/tmp/datavault/archive:rw
+      - datavault_temp_data:/tmp/datavault/temp:rw
+      - datavault_meta_data:/tmp/datavault/meta:rw
+      - datavault_user_data:/Users:rw
+    networks:
+      - dbnet
+      - mqnet
+    depends_on:
+      - rabbitmq
+      - mysql
+
   web:
     build:
       context: ../src/datavault/
