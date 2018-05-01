@@ -71,6 +71,7 @@ services:
       - datavault_meta_data:/tmp/datavault/meta:rw
       - datavault_user_data:/Users:rw
     networks:
+      - default
       - dbnet
       - mqnet
     depends_on:
@@ -89,12 +90,6 @@ services:
       - datavault_user_data:/Users:rw
     ports:
       - "80:8080"
-    networks:
-      - dbnet
-      - mqnet
-    depends_on:
-      - rabbitmq
-      - mysql
 
 networks:
   dbnet:
