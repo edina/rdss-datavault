@@ -2,10 +2,7 @@ version: '2.1'
 volumes:
   rabbitmq_data:
   mysql_data:
-  datavault_active_data:
   datavault_archive_data:
-  datavault_temp_data:
-  datavault_meta_data:
   datavault_user_data:
 services:
   rabbitmq:
@@ -47,12 +44,8 @@ services:
       context: ../src/datavault/
       dockerfile: worker.Dockerfile
     volumes:
-      # Cannot use a single volume for /tmp/datavault, as the subdirs must already exist before use - the code will not create them
-      - datavault_active_data:/tmp/datavault/active:rw
-      - datavault_archive_data:/tmp/datavault/archive:rw
-      - datavault_temp_data:/tmp/datavault/temp:rw
-      - datavault_meta_data:/tmp/datavault/meta:rw
       - datavault_user_data:/Users:rw
+      - datavault_archive_data:/tmp/datavault:rw
     networks:
       - dbnet
       - mqnet
@@ -65,11 +58,9 @@ services:
       context: ../src/datavault/
       dockerfile: broker.Dockerfile
     volumes:
-      - datavault_active_data:/tmp/datavault/active:rw
-      - datavault_archive_data:/tmp/datavault/archive:rw
-      - datavault_temp_data:/tmp/datavault/temp:rw
-      - datavault_meta_data:/tmp/datavault/meta:rw
       - datavault_user_data:/Users:rw
+      # Don't think the broker needs to directly access this data
+      #- datavault_archive_data:/tmp/datavault:rw
     networks:
       - default
       - dbnet
@@ -82,12 +73,6 @@ services:
     build:
       context: ../src/datavault/
       dockerfile: webapp.Dockerfile
-    volumes:
-      - datavault_active_data:/tmp/datavault/active:rw
-      - datavault_archive_data:/tmp/datavault/archive:rw
-      - datavault_temp_data:/tmp/datavault/temp:rw
-      - datavault_meta_data:/tmp/datavault/meta:rw
-      - datavault_user_data:/Users:rw
     ports:
       - "80:8080"
 
