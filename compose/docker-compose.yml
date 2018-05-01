@@ -40,8 +40,10 @@ services:
 
   workers:
     build:
-      context: ../src/datavault/datavault-worker
+      context: ../src/datavault/
+      dockerfile: worker.Dockerfile
     volumes:
+      # Cannot use a single volume for /tmp/datavault, as the subdirs must already exist before use - the code will not create them
       - datavault_active_data:/tmp/datavault/active:rw
       - datavault_archive_data:/tmp/datavault/archive:rw
       - datavault_temp_data:/tmp/datavault/temp:rw
@@ -55,7 +57,8 @@ services:
 
   web:
     build:
-      context: ../src/datavault/datavault-webapp
+      context: ../src/datavault/
+      dockerfile: webapp.Dockerfile
     volumes:
       - datavault_active_data:/tmp/datavault/active:rw
       - datavault_archive_data:/tmp/datavault/archive:rw
