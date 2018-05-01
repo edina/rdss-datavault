@@ -29,8 +29,7 @@ To run the images, use `make up`.
 Some Datavault configuration is stored in the database.
 To setup the initial database, you can run the `./configure-storage.sh` script.
 The script should display the contents of the `ArchiveStores` table.
-If it displays nothing, or an error, thje database has not yet been created.
-Try running `docker-compose stop broker` (but see *Using docker-compose directly* first) and then `make up` again.
+If it displays nothing, or an error, then something has went wrong (most likely database initialisation).
 
 ### Other Commands
 

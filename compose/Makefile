@@ -22,6 +22,7 @@ list:  ## Show running containers
 watch: ## Show container logs
 	docker-compose logs -f
 
+stop: down
 down:  ## Stop running containers
 	docker-compose down
 
