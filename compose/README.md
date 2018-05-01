@@ -24,6 +24,14 @@ The `qa` build is the default as this is the quickest and the one used by our de
 
 To run the images, use `make up`.
 
+## Initial configuration
+
+Some Datavault configuration is stored in the database.
+To setup the initial database, you can run the `./configure-storage.sh` script.
+The script should display the contents of the `ArchiveStores` table.
+If it displays nothing, or an error, thje database has not yet been created.
+Try running `docker-compose stop broker` (but see *Using docker-compose directly* first) and then `make up` again.
+
 ### Other Commands
 
 Here are some other `make` commands other that may be useful when working with these`docker-compose` configurations.
@@ -39,6 +47,8 @@ Here are some other `make` commands other that may be useful when working with t
 
 The `docker-compose.yml` file will use volumes for persisting data between runs.
 If you need to reset them, you can use `make destroy` to destroy all containers and all volumes.
+
+*NOTE*: At present, bringing down the `broker` container will delete the contents of the database.
 
 ### Development Build
 
