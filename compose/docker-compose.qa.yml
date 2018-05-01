@@ -21,6 +21,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
 
   mysql:
     image: mysql:5.7
@@ -40,6 +46,13 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
 
   workers:
     image: ${REGISTRY}/rdss-datavault/worker
@@ -55,6 +68,13 @@ services:
     depends_on:
       - rabbitmq
       - mysql
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
 
   broker:
     image: ${REGISTRY}/rdss-datavault/broker
@@ -72,11 +92,25 @@ services:
     depends_on:
       - rabbitmq
       - mysql
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
 
   web:
     image: ${REGISTRY}/rdss-datavault/web
     ports:
       - "80:8080"
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
 
 networks:
   dbnet:
