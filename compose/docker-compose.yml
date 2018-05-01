@@ -12,9 +12,6 @@ services:
     image: rabbitmq:3-management-alpine
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq:rw
-    ports:
-      - "5672:5672"
-      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: datavault
       RABBITMQ_DEFAULT_PASS: datavault
@@ -28,8 +25,6 @@ services:
 
   mysql:
     image: mysql:5.7
-    ports:
-      - "53306:3306"
     restart: always
     volumes:
       # At the moment, the database is deleted when the broker stops, but that is due to be corrected
@@ -87,7 +82,7 @@ services:
       - datavault_meta_data:/tmp/datavault/meta:rw
       - datavault_user_data:/Users:rw
     ports:
-      - "58080:8080"
+      - "80:8080"
     networks:
       - dbnet
       - mqnet
