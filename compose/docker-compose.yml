@@ -36,6 +36,11 @@ services:
       MYSQL_PASSWORD: datavault
     networks:
       - dbnet
+    healthcheck:
+      test: mysql -u$$MYSQL_USER -p$$MYSQL_PASSWORD -D$$MYSQL_DATABASE -e "SELECT 1"
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   workers:
     build:
@@ -53,6 +58,7 @@ services:
       - mqnet
     depends_on:
       - rabbitmq
+      - mysql
 
   broker:
     build:
