@@ -1,0 +1,60 @@
+---
+
+- hosts: "localhost"
+  connection: "local"
+
+  vars:
+
+    projects:
+
+      - name: "JISC DataVault project"
+        repo: "https://github.com/DataVault/datavault"
+        version: "master"
+        dest: "./src/datavault"
+
+  tasks:
+
+    - name: "Echo environment"
+      debug:
+        msg: "Environment is '{{ env }}'"
+
+    - name: "Install playbook dependencies"
+      pip:
+        name: "{{ item }}"
+        extra_args: "--user"
+      with_items:
+        - "setuptools"
+        - "docker"
+        - "mvn"
+
+    - name: "Clone repositories"
+      git:
+        accept_hostkey: "yes"
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+        version: "{{ item.version }}"
+      register: "git_clone"
+      with_items: "{{ projects }}"
+      tags:
+        - "clone"
+
+    # Don't tag as 'latest' if version contains 'rc' or rdss_version does
+    - name: "Package application"
+      command: "mvn clean test package"
+      args:
+        chdir: "{{ item.dest }}"
+      with_items: "{{ projects }}"
+      tags:
+        - "build"
+
+    # Don't tag as 'latest' if version contains 'rc' or rdss_version does
+    - name: "Build and tag images"
+      command: "docker-compose -p datavault build"
+      args:
+        chdir: "compose"
+        #when: item.changed
+      with_items: "{{ git_clone.results }}"
+      tags:
+        - "build"
+        # Ignore false ANSIBLE0016 claiming this task should be a handler
+        - skip_ansible_lint

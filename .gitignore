@@ -1,0 +1,12 @@
+*~
+*#
+*.swp
+
+/src/*
+
+# Terraform compiled files
+*.tfstate
+*.tfstate.backup
+
+# Ansible
+*.retry
