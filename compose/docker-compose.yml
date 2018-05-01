@@ -1,9 +1,16 @@
 version: '2.1'
+volumes:
+  rabbitmq_data:
+  datavault_active_data:
+  datavault_archive_data:
+  datavault_temp_data:
+  datavault_meta_data:
+  datavault_user_data:
 services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     volumes:
-      - ./docker/rabbitmq_data:/bitnami
+      - rabbitmq_data:/bitnami
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -35,13 +42,11 @@ services:
     build:
       context: ../src/datavault/datavault-worker
     volumes:
-      - ./docker/tmp/datavault/active:/tmp/datavault/active:rw
-      - ./docker/tmp/datavault/archive:/tmp/datavault/archive:rw
-      - ./docker/tmp/datavault/temp:/tmp/datavault/temp:rw
-      - ./docker/tmp/datavault/meta:/tmp/datavault/meta:rw
-      - ./docker/tmp/Users:/Users:rw
-      - ./docker/config:/docker_datavault-home/config/
-      - ./docker/scripts:/docker_datavault-home/scripts/
+      - datavault_active_data:/tmp/datavault/active:rw
+      - datavault_archive_data:/tmp/datavault/archive:rw
+      - datavault_temp_data:/tmp/datavault/temp:rw
+      - datavault_meta_data:/tmp/datavault/meta:rw
+      - datavault_user_data:/Users:rw
     networks:
       - dbnet
       - mqnet
@@ -51,18 +56,14 @@ services:
   web:
     build:
       context: ../src/datavault/datavault-webapp
+    volumes:
+      - datavault_active_data:/tmp/datavault/active:rw
+      - datavault_archive_data:/tmp/datavault/archive:rw
+      - datavault_temp_data:/tmp/datavault/temp:rw
+      - datavault_meta_data:/tmp/datavault/meta:rw
+      - datavault_user_data:/Users:rw
     ports:
       - "58080:8080"
-    volumes:
-      - ./docker/tmp/datavault/active:/tmp/datavault/active:rw
-      - ./docker/tmp/datavault/archive:/tmp/datavault/archive:rw
-      - ./docker/tmp/datavault/temp:/tmp/datavault/temp:rw
-      - ./docker/tmp/datavault/meta:/tmp/datavault/meta:rw
-      - ./docker/tmp/Users:/Users:rw
-      - ./docker/config:/docker_datavault-home/config/
-      - ./docker/scripts:/docker_datavault-home/scripts/
-      - ./datavault-assembly/target/datavault-assembly-1.0-SNAPSHOT-assembly/datavault-home/lib:/docker_datavault-home/lib
-      - ./datavault-assembly/target/datavault-assembly-1.0-SNAPSHOT-assembly/datavault-home/webapps:/docker_datavault-home/webapps
     networks:
       - dbnet
       - mqnet
