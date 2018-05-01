@@ -1,4 +1,12 @@
 export COMPOSE_PROJECT_NAME ?= rdssdatavault
+export REGISTRY ?= 400079346860.dkr.ecr.eu-west-1.amazonaws.com
+
+ENV ?= qa
+
+export COMPOSE_FILE := $(shell realpath ${CURDIR}/docker-compose.${ENV}.yml)
+ifeq ("$(ENV)", "dev")
+	export COMPOSE_FILE := $(shell realpath ${CURDIR}/docker-compose.qa.yml):$(COMPOSE_FILE)
+endif
 
 all: destroy build up list
 

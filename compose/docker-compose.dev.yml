@@ -1,0 +1,17 @@
+version: '2.1'
+
+services:
+  workers:
+    build:
+      context: ../src/datavault/
+      dockerfile: worker.Dockerfile
+
+  broker:
+    build:
+      context: ../src/datavault/
+      dockerfile: broker.Dockerfile
+
+  web:
+    build:
+      context: ../src/datavault/
+      dockerfile: webapp.Dockerfile
