@@ -1,6 +1,7 @@
 version: '2.1'
 volumes:
   rabbitmq_data:
+  mysql_data:
   datavault_active_data:
   datavault_archive_data:
   datavault_temp_data:
@@ -10,7 +11,7 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     volumes:
-      - rabbitmq_data:/bitnami
+      - rabbitmq_data:/var/lib/rabbitmq:rw
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -30,6 +31,9 @@ services:
     ports:
       - "53306:3306"
     restart: always
+    volumes:
+      # At the moment, the database is deleted when the broker stops, but that is due to be corrected
+      - mysql_data:/var/lib/mysql:rw
     environment:
       MYSQL_ROOT_PASSWORD: unbr34kable
       MYSQL_DATABASE: datavault
