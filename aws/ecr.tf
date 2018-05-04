@@ -6,13 +6,15 @@ variable "images" {
 resource "aws_ecr_repository" "ecr" {
   count = "${length(var.images)}"
   name = "rdss-datavault/${element(var.images, count.index)}"
+  # Ideally this would be tagged in the same way as other things, but ECR doesn't support tagging
+  # tags = "${var.aws_cost_tags}"
 }
 
 resource "aws_ecr_lifecycle_policy" "ecr_policy" {
   count = "${length(var.images)}"
   repository = "rdss-datavault/${element(var.images, count.index)}"
 
-  # This really should delete all untagged images, but you cant' set countNumber less than 1
+  # This really should delete all untagged images, but you can't set countNumber less than 1
   policy = <<EOF
 {
     "rules": [
@@ -33,3 +35,4 @@ resource "aws_ecr_lifecycle_policy" "ecr_policy" {
 }
 EOF
 }
+

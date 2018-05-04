@@ -12,6 +12,8 @@
 
 # Secrets
 compose/secrets.env
+id_rsa_datavault
+secrets.auto.tfvars
 
 # Ansible
 *.retry
