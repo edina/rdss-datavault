@@ -31,9 +31,6 @@ Apply the changes:
 ## State
 
 The terraform state is stored within an S3 bucket, configured in `backend.tf`.
-This bucket has to be created manually, it can't be done with Terraform.
-In case it needs to be recreated, the bucket is called `rdss-datavault`, and is configured with the following:
-
-* Versioning
-* Tags - Group: rdss-datavault
-* Tags - Application: rdss-datavault
+This bucket is defined in `s3.tf`, but there's a chicken-and-egg problem here - Terraform needs the bucket to exist before it can do anything, including creating the bucket.
+If the bucket is ever deleted, or you want to move to a different bucket, you'll need to create the bucket some other way, e.g. through the web interface.
+The bucket is marked with `prevent_destroy = true`, so that it shouldn't be deleted, but you should always take care with it.
