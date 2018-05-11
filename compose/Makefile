@@ -19,6 +19,9 @@ up:  ## Start containers
 list:  ## Show running containers
 	docker-compose ps
 
+login:  ## Login to registry.
+	../ecr-login.sh
+
 watch: ## Show container logs
 	docker-compose logs -f
 

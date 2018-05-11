@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "rdss-datavault"
+    bucket = "rdss-datavault-state"
     key    = "terraform-state"
     region = "eu-west-1"
   }

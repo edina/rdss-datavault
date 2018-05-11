@@ -21,6 +21,8 @@ The Docker Compose build has two modes: `dev` and `qa`.
 The `qa` mode will attempt to use pre-built images available from a given registry. The `dev` mode does not require a registry, and instead builds each of the images itself. This takes longer, but can be useful if making changes as part of development.
 
 The `qa` build is the default as this is the quickest and the one used by our default deployment.
+Before you can pull the images, you will need to login in to the registry.
+To do this, use the `make login` command.
 
 To run the images, use `make up`.
 
