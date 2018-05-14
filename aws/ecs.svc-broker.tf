@@ -2,7 +2,7 @@ data "template_file" "task_definition_broker" {
   template = "${file("${path.module}/templates/rdss-datavault-broker.json")}"
 
   vars {
-    image_url        = "${aws_ecr_repository.ecr.0.repository_url}:latest"
+    image_url        = "${aws_ecr_repository.broker.repository_url}:latest"
     container_name   = "rdss-datavault-broker"
     log_group_region = "${var.aws_region}"
     log_group_name   = "${aws_cloudwatch_log_group.datavault.name}"
