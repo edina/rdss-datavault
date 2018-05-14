@@ -28,6 +28,11 @@ To run the images, use `make up`.
 
 ## Initial configuration
 
+In order to communicate with S3 to deposit/retrieve data, the containers needs to have AWS access.
+You enable this, run `cp secrets.env.template secrets.env`, then update `secrets.env` with your access and secret keys.
+Note that this will put your secret key in an environment variable on the container.
+If you're concerned about this, you could look at configuring a key-pair solely for this purpose rather than using your normal one.
+
 Some Datavault configuration is stored in the database.
 To setup the initial database, you can run the `./configure-storage.sh` script.
 The script should display the contents of the `ArchiveStores` table.
