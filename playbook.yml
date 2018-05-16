@@ -9,7 +9,7 @@
 
       - name: "JISC DataVault project"
         repo: "https://github.com/JiscRDSS/datavault"
-        #version: "master"
+        # version: "master"
         version: "rdss"
         dest: "./src/datavault"
         images:
@@ -56,7 +56,7 @@
         -f {{ item.1.dockerfile }} ."
       args:
         chdir: "{{ item.1.path }}"
-        #when: item.0.changed
+        when: item.0.changed
       with_subelements:
         - "{{ git_clone.results }}"
         - item.images
@@ -67,7 +67,7 @@
 
     - name: "Publish images"
       command: docker push "{{ item.1.name }}"
-      #when: item.0.changed
+      when: item.0.changed
       with_subelements:
         - "{{ git_clone.results }}"
         - item.images
