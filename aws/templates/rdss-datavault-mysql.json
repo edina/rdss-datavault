@@ -3,24 +3,20 @@
     "cpu": 256,
     "environment": [
       {
-        "name": "MYSQL_HOST",
-        "value": "rdss-datavault-mysql"
-      },
-      {
         "name": "MYSQL_PASSWORD",
         "value": "abcd1234"
       },
       {
-        "name": "RABBITMQ_HOST",
-        "value": "rdss-datavault-rabbitmq"
+        "name": "MYSQL_DATABASE",
+        "value": "datavault"
       },
       {
-        "name": "RABBITMQ_PASSWORD",
-        "value": "efgh5678"
+        "name": "MYSQL_USER",
+        "value": "datavault"
       },
       {
-        "name": "AWS_S3_BUCKET",
-        "value": "${archive_bucket_name}"
+        "name": "MYSQL_ROOT_PASSWORD",
+        "value": "unbr34kable"
       }
     ],
     "essential": true,
