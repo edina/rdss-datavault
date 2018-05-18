@@ -12,7 +12,9 @@ data "template_file" "launch_script" {
   template = "${file("${path.module}/templates/ecs-launch-script.sh")}"
 
   vars {
-    cluster = "${aws_ecs_cluster.main.name}"
+    cluster        = "${aws_ecs_cluster.main.name}"
+    efs_fs_id      = "${aws_efs_file_system.docker_volumes.id}"
+    efs_mountpoint = "${var.aws_efs_docker_volumes_mountpoint}"
   }
 }
 

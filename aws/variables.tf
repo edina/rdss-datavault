@@ -66,15 +66,11 @@ variable "aws_admin_cidr_ingress" {
 variable "aws_ecs_optimized_amis" {
   description = "ECS-optimized AMIs"
 
+  # Latest versions can be found at https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI_launch_latest.html or by running
+  # aws ssm get-parameters --names /aws/service/ecs/optimized-ami/amazon-linux/recommended --region eu-west-1
   default = {
-    us-east-1    = "ami-275ffe31"
-    us-east-2    = "ami-62745007"
-    us-west-1    = "ami-689bc208"
-    us-west-2    = "ami-62d35c02"
-    eu-west-1    = "ami-95f8d2f3"
-    eu-west-2    = "ami-bf9481db"
-    eu-central-1 = "ami-085e8a67"
-    ca-central-1 = "ami-ee58e58a"
+    eu-west-1    = "ami-2d386654"
+    eu-west-2    = "ami-2218f945"
   }
 }
 
@@ -85,4 +81,9 @@ variable "aws_ecs_asg_size" {
     max = "1"
     desired = "1"
   }
+}
+
+variable "aws_efs_docker_volumes_mountpoint" {
+  description = "Mount point for location of EFS for Docker volumes"
+  default     = "/mnt/efs/docker"
 }
