@@ -6,12 +6,18 @@ data "template_file" "task_definition_rabbitmq" {
     container_name   = "rdss-datavault-rabbitmq"
     log_group_region = "${var.aws_region}"
     log_group_name   = "${aws_cloudwatch_log_group.datavault.name}"
+    volume_name      = "rabbitmq"
   }
 }
 
 resource "aws_ecs_task_definition" "rdss_datavault_rabbitmq" {
   family                = "rdss-datavault-rabbitmq"
   container_definitions = "${data.template_file.task_definition_rabbitmq.rendered}"
+
+  volume {
+    name      = "rabbitmq"
+    host_path = "${var.aws_efs_docker_volumes_mountpoint}/rabbitmq"
+  }
 }
 
 resource "aws_ecs_service" "rdss_datavault_rabbitmq" {
