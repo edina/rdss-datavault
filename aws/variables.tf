@@ -87,3 +87,8 @@ variable "aws_efs_docker_volumes_mountpoint" {
   description = "Mount point for location of EFS for Docker volumes"
   default     = "/mnt/efs/docker"
 }
+
+variable "mysql_password" {
+  description = "Master DB password"
+}
+

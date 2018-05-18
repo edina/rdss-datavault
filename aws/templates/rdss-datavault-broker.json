@@ -4,11 +4,11 @@
     "environment": [
       {
         "name": "MYSQL_HOST",
-        "value": "rdss-datavault-mysql"
+        "value": "${mysql_host}"
       },
       {
         "name": "MYSQL_PASSWORD",
-        "value": "abcd1234"
+        "value": "${mysql_password}"
       },
       {
         "name": "RABBITMQ_HOST",

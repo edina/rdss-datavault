@@ -3,8 +3,12 @@
     "cpu": 256,
     "environment": [
       {
+        "name": "MYSQL_HOST",
+        "value": "${mysql_host}"
+      },
+      {
         "name": "MYSQL_PASSWORD",
-        "value": "abcd1234"
+        "value": "${mysql_password}"
       },
       {
         "name": "RABBITMQ_PASSWORD",
