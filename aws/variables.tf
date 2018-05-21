@@ -92,3 +92,7 @@ variable "mysql_password" {
   description = "Master DB password"
 }
 
+variable "rabbitmq_password" {
+  description = "Master RabbitMQ password"
+}
+

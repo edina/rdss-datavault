@@ -6,6 +6,7 @@ data "template_file" "task_definition_rabbitmq" {
     container_name   = "rdss-datavault-rabbitmq"
     log_group_region = "${var.aws_region}"
     log_group_name   = "${aws_cloudwatch_log_group.datavault.name}"
+    rabbitmq_password   = "${var.rabbitmq_password}"
     volume_name      = "rabbitmq"
   }
 }
