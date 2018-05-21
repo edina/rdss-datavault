@@ -28,6 +28,16 @@
         "containerPath": "/var/lib/rabbitmq"
       }
     ],
-    "name": "${container_name}"
+    "name": "${container_name}",
+    "portMappings": [
+      {
+        "containerPort": 5672,
+        "hostPort": 5672
+      },
+      {
+        "containerPort": 15672,
+        "hostPort": 15672
+      }
+    ]
   }
 ]

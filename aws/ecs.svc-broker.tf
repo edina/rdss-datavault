@@ -10,7 +10,8 @@ data "template_file" "task_definition_broker" {
     archive_bucket_name = "${aws_s3_bucket.archive.bucket}"
     mysql_host          = "${aws_db_instance.datavault.address}"
     mysql_password      = "${var.mysql_password}"
-    rabbitmq_host       = "127.0.0.1"
+    # This is the gateway of the Docker daemon, and only works as long as a) broker & rabbitmq are on same host & b) Docker IP range doesn't change
+    rabbitmq_host       = "172.17.0.1"
     rabbitmq_password   = "${var.rabbitmq_password}"
     volume_name         = "datavault_working_data"
   }
