@@ -8,7 +8,7 @@
       },
       {
         "name": "RABBITMQ_DEFAULT_PASS",
-        "value": "efgh5678"
+        "value": "${rabbitmq_password}"
       }
     ],
     "essential": true,

@@ -12,11 +12,11 @@
       },
       {
         "name": "RABBITMQ_HOST",
-        "value": "rdss-datavault-rabbitmq"
+        "value": "${rabbitmq_host}"
       },
       {
         "name": "RABBITMQ_PASSWORD",
-        "value": "efgh5678"
+        "value": "${rabbitmq_password}"
       },
       {
         "name": "AWS_S3_BUCKET",
