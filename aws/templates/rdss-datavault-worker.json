@@ -26,6 +26,12 @@
       }
     },
     "memory": 512,
+    "mountPoints": [
+      {
+        "sourceVolume": "${volume_name}",
+        "containerPath": "/tmp/datavault"
+      }
+    ],
     "name": "${container_name}"
   }
 ]

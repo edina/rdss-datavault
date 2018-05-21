@@ -45,6 +45,8 @@ services:
     image: ${REGISTRY}/rdss-datavault/worker
     volumes:
       - datavault_user_data:/Users:rw
+      # This volume has to be shared with the worker task, in order for the broker to access the metadata after the worker has updated it
+      # That's a bug - the worker should instead send the metadata back via rabbitmq - once it's fixed the volume can be removed/unshared
       - datavault_archive_data:/tmp/datavault:rw
     environment:
       MYSQL_PASSWORD: abcd1234
@@ -66,6 +68,8 @@ services:
     env_file: secrets.env
     volumes:
       - datavault_user_data:/Users:rw
+      # This volume has to be shared with the worker task, in order for the broker to access the metadata after the worker has updated it
+      # That's a bug - the worker should instead send the metadata back via rabbitmq - once it's fixed the volume can be removed/unshared
       - datavault_archive_data:/tmp/datavault:rw
     networks:
       - default
