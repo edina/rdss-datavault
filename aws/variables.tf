@@ -55,7 +55,7 @@ variable "aws_public_key_path" {
 
 variable "aws_ecs_ec2_instance_type" {
   description = "AWS instance type"
-  default     = "t2.small"
+  default     = "t2.medium"
 }
 
 variable "aws_admin_cidr_ingress" {
