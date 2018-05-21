@@ -12,6 +12,7 @@ data "template_file" "task_definition_web" {
 resource "aws_ecs_task_definition" "rdss_datavault_web" {
   family                = "rdss-datavault-web"
   container_definitions = "${data.template_file.task_definition_web.rendered}"
+  network_mode          = "bridge"
 }
 
 resource "aws_ecs_service" "rdss_datavault_web" {

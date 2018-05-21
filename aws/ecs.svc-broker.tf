@@ -19,6 +19,7 @@ data "template_file" "task_definition_broker" {
 resource "aws_ecs_task_definition" "rdss_datavault_broker" {
   family                = "rdss-datavault-broker"
   container_definitions = "${data.template_file.task_definition_broker.rendered}"
+  network_mode          = "bridge"
 
   # This volume has to be shared with the worker task, in order for the broker to access the metadata after the worker has updated it
   # That's a bug - the worker should instead send the metadata back via rabbitmq - once it's fixed the volume can be removed/unshared
