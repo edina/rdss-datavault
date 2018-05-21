@@ -62,14 +62,22 @@ These instances are created and managed by an *EC2 Auto Scaling Group*, which de
 When an instance is created, a launch script is executed which connects it to the ECS cluster.
 At present, the group has only a single instance, and it can only be scaled manually; no automatic scaling has been configured.
 
-Each of the five component parts of DataVault is defined as an *ECS task* which contains the relevant container, and each has a related *ECS service*.
+Each of the four component parts of DataVault is defined as an *ECS task* which contains the relevant container, and each has a related *ECS service*.
 ECS ensures that there is always one task running for each service (if a tasks exits, it will be restarted), by deploying it to one of the instances in the cluster.
 At present, the containers cannot communicate between each other (and so several will not start cleanly).
+
+There is a MySQL database created using *RDS*, which the broker and workers communicate with.
+
+There is an *Elastic File System* (EFS), similar to a NFS-server.
+This is mounted onto each of the EC2 instances.
+Folders within this mount-point are then linked as volumes in relevant ECS task definitions, and bound to the appropriate location in each container.
+Currently, there are volumes for persisting RabbitMQ data, and for sharing /tmp/datavault between the broker and workers.
 
 Container logs are written to *CloudWatch*.
 There is one CloudWatch group, datavault, and then one log stream is created for each task that executes.
 
-There is a *security group* which defines who is able to access the *EC2 instances* and on what ports.
+There is a *security group* which defines who is able to access the EC2 instances and on what ports.
+There are also additional security groups to control communication between the instances and RDS/EFS.
 
 There are two *S3* buckets, one to hold the Terraform state (see below), and the other to hold archived data.
 

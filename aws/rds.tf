@@ -11,6 +11,7 @@ resource "aws_db_instance" "datavault" {
   tags                   = "${var.aws_cost_tags}"
   vpc_security_group_ids = [ "${aws_security_group.rds.id}" ]
 }
+
 resource "aws_security_group" "rds" {
   description = "Controls access to RDS"
   vpc_id      = "${data.aws_vpc.main.id}"
