@@ -40,6 +40,13 @@
         "containerPath": "/tmp/datavault"
       }
     ],
-    "name": "${container_name}"
+    "name": "${container_name}",
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 8080
+      }
+    ]
+
   }
 ]
