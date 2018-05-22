@@ -1,6 +1,12 @@
 [
   {
     "cpu": 256,
+    "environment": [
+      {
+        "name": "BROKER_HOST",
+        "value": "${broker_host}"
+      }
+    ],
     "essential": true,
     "image": "${image_url}",
     "logConfiguration": {
