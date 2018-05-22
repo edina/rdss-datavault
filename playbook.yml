@@ -56,22 +56,16 @@
         -f {{ item.1.dockerfile }} ."
       args:
         chdir: "{{ item.1.path }}"
-      when: item.0.changed
       with_subelements:
         - "{{ git_clone.results }}"
         - item.images
       tags:
         - "build"
-        # Ignore false ANSIBLE0016 claiming this task should be a handler
-        - skip_ansible_lint
 
     - name: "Publish images"
       command: docker push "{{ item.1.name }}"
-      when: item.0.changed
       with_subelements:
         - "{{ git_clone.results }}"
         - item.images
       tags:
         - "publish"
-        # Ignore false ANSIBLE0016 claiming this task should be a handler
-        - skip_ansible_lint
