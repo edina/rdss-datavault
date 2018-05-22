@@ -10,5 +10,8 @@
 *.tfstate.*.backup
 *.tfstate.backup
 
+# Secrets
+compose/secrets.env
+
 # Ansible
 *.retry

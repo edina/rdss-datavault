@@ -49,6 +49,7 @@ services:
     environment:
       MYSQL_PASSWORD: abcd1234
       RABBITMQ_PASSWORD: efgh5678
+      AWS_S3_BUCKET: rdss-datavault-archive
     networks:
       - dbnet
       - mqnet
@@ -61,10 +62,11 @@ services:
     environment:
       MYSQL_PASSWORD: abcd1234
       RABBITMQ_PASSWORD: efgh5678
+      AWS_S3_BUCKET: rdss-datavault-archive
+    env_file: secrets.env
     volumes:
       - datavault_user_data:/Users:rw
-      # Don't think the broker needs to directly access this data
-      #- datavault_archive_data:/tmp/datavault:rw
+      - datavault_archive_data:/tmp/datavault:rw
     networks:
       - default
       - dbnet
