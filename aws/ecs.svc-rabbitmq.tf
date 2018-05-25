@@ -15,6 +15,7 @@ resource "aws_ecs_task_definition" "rdss_datavault_rabbitmq" {
   family                = "rdss-datavault-rabbitmq"
   container_definitions = "${data.template_file.task_definition_rabbitmq.rendered}"
   network_mode          = "bridge"
+  task_role_arn         = "${aws_iam_role.ecs_task.arn}"
 
   volume {
     name      = "rabbitmq"
