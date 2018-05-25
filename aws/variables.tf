@@ -43,6 +43,11 @@ variable "aws_asg_cost_tags" {
   ]
 }
 
+variable "aws_cloudwatch_log_retention_days" {
+  description = "Number of days to retain CloudWatch logs for"
+  default = 7
+}
+
 variable "aws_key_name" {
   description = "Name of AWS key pair"
   default     = "Datavault"
