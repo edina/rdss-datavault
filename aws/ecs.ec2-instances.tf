@@ -1,6 +1,6 @@
 resource "aws_autoscaling_group" "app" {
   name                 = "asg"
-  vpc_zone_identifier  = ["${data.aws_subnet.main.id}"]
+  vpc_zone_identifier  = ["${data.aws_subnet.a.id}", "${data.aws_subnet.b.id}", "${data.aws_subnet.c.id}"]
   min_size             = "${var.aws_ecs_asg_size["min"]}"
   max_size             = "${var.aws_ecs_asg_size["max"]}"
   desired_capacity     = "${var.aws_ecs_asg_size["desired"]}"
@@ -50,6 +50,13 @@ resource "aws_security_group" "instance_sg" {
     from_port       = 80
     to_port         = 80
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    protocol        = "tcp"
+    from_port       = 0
+    to_port         = 65535
+    security_groups = ["${aws_security_group.rdss_datavault_broker.id}"]
   }
 
   egress {

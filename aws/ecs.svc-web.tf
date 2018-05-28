@@ -6,8 +6,7 @@ data "template_file" "task_definition_web" {
     container_name   = "rdss-datavault-web"
     log_group_region = "${var.aws_region}"
     log_group_name   = "${aws_cloudwatch_log_group.datavault.name}"
-    # This is the gateway of the Docker daemon, and only works as long as a) broker & web are on same host & b) Docker IP range doesn't change
-    broker_host       = "172.17.0.1"
+    broker_host      = "${aws_route53_record.rdss_datavault_broker.fqdn}"
   }
 }
 
