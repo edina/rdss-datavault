@@ -56,7 +56,7 @@ resource "aws_security_group" "instance_sg" {
     protocol        = "tcp"
     from_port       = 0
     to_port         = 65535
-    security_groups = ["${aws_security_group.rdss_datavault_broker.id}"]
+    security_groups = ["${aws_security_group.rdss_datavault_broker.id}","${aws_security_group.rdss_datavault_rabbitmq.id}"]
   }
 
   egress {

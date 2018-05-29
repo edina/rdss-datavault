@@ -10,8 +10,7 @@ data "template_file" "task_definition_broker" {
     archive_bucket_name = "${aws_s3_bucket.archive.bucket}"
     mysql_host          = "${aws_db_instance.datavault.address}"
     mysql_password      = "${var.mysql_password}"
-    # This is the gateway of the Docker daemon, and only works as long as a) broker & rabbitmq are on same host & b) Docker IP range doesn't change
-    rabbitmq_host       = "172.17.0.1"
+    rabbitmq_host       = "${aws_route53_record.rdss_datavault_rabbitmq.fqdn}"
     rabbitmq_password   = "${var.rabbitmq_password}"
     volume_name         = "datavault_working_data"
   }
@@ -54,7 +53,7 @@ resource "aws_route53_record" "rdss_datavault_broker" {
   alias {
     name                   = "${aws_lb.rdss_datavault_broker.dns_name}"
     zone_id                = "${aws_lb.rdss_datavault_broker.zone_id}"
-    evaluate_target_health = true
+    evaluate_target_health = false
   }
 }
 
@@ -69,7 +68,7 @@ resource "aws_lb" "rdss_datavault_broker" {
 
 resource "aws_lb_listener" "rdss_datavault_broker" {
   load_balancer_arn = "${aws_lb.rdss_datavault_broker.arn}"
-  port              = "8080"
+  port              = 8080
   protocol          = "HTTP"
 
   default_action {
