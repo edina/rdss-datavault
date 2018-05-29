@@ -47,16 +47,9 @@ resource "aws_security_group" "instance_sg" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 80
-    to_port         = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    protocol        = "tcp"
     from_port       = 0
     to_port         = 65535
-    security_groups = ["${aws_security_group.rdss_datavault_broker.id}","${aws_security_group.rdss_datavault_rabbitmq.id}"]
+    security_groups = ["${aws_security_group.rdss_datavault_broker.id}","${aws_security_group.rdss_datavault_rabbitmq.id}","${aws_security_group.rdss_datavault_web.id}"]
   }
 
   egress {
