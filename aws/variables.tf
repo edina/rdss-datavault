@@ -60,7 +60,7 @@ variable "aws_public_key_path" {
 
 variable "aws_ecs_ec2_instance_type" {
   description = "AWS instance type"
-  default     = "t2.medium"
+  default     = "t2.small"
 }
 
 variable "aws_admin_cidr_ingress" {
@@ -82,9 +82,9 @@ variable "aws_ecs_optimized_amis" {
 variable "aws_ecs_asg_size" {
   description = "Numbers of servers in ASG"
   default = {
-    min = "1"
-    max = "1"
-    desired = "1"
+    min = "2"
+    max = "2"
+    desired = "2"
   }
 }
 
