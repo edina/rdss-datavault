@@ -2,9 +2,21 @@ resource "aws_efs_file_system" "docker_volumes" {
   tags           = "${var.aws_cost_tags}"
 }
 
-resource "aws_efs_mount_target" "docker_volumes" {
+resource "aws_efs_mount_target" "docker_volumes_a" {
   file_system_id  = "${aws_efs_file_system.docker_volumes.id}"
   subnet_id       = "${data.aws_subnet.a.id}"
+  security_groups = [ "${aws_security_group.efs.id}" ]
+}
+
+resource "aws_efs_mount_target" "docker_volumes_b" {
+  file_system_id  = "${aws_efs_file_system.docker_volumes.id}"
+  subnet_id       = "${data.aws_subnet.b.id}"
+  security_groups = [ "${aws_security_group.efs.id}" ]
+}
+
+resource "aws_efs_mount_target" "docker_volumes_c" {
+  file_system_id  = "${aws_efs_file_system.docker_volumes.id}"
+  subnet_id       = "${data.aws_subnet.c.id}"
   security_groups = [ "${aws_security_group.efs.id}" ]
 }
 
