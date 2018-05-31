@@ -1,0 +1,37 @@
+[
+  {
+    "cpu": 256,
+    "environment": [
+      {
+        "name": "MYSQL_HOST",
+        "value": "${mysql_host}"
+      },
+      {
+        "name": "MYSQL_PASSWORD",
+        "value": "${mysql_password}"
+      },
+      {
+        "name": "RABBITMQ_PASSWORD",
+        "value": "efgh5678"
+      }
+    ],
+    "essential": true,
+    "image": "${image_url}",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group_name}",
+        "awslogs-region": "${log_group_region}",
+        "awslogs-stream-prefix": "rdss-datavault"
+      }
+    },
+    "memory": 512,
+    "mountPoints": [
+      {
+        "sourceVolume": "${volume_name}",
+        "containerPath": "/tmp/datavault"
+      }
+    ],
+    "name": "${container_name}"
+  }
+]
