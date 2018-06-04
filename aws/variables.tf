@@ -43,6 +43,11 @@ variable "aws_asg_cost_tags" {
   ]
 }
 
+variable "aws_cloudwatch_log_retention_days" {
+  description = "Number of days to retain CloudWatch logs for"
+  default = 7
+}
+
 variable "aws_key_name" {
   description = "Name of AWS key pair"
   default     = "Datavault"
@@ -55,7 +60,7 @@ variable "aws_public_key_path" {
 
 variable "aws_ecs_ec2_instance_type" {
   description = "AWS instance type"
-  default     = "t2.medium"
+  default     = "t2.small"
 }
 
 variable "aws_admin_cidr_ingress" {
@@ -77,9 +82,9 @@ variable "aws_ecs_optimized_amis" {
 variable "aws_ecs_asg_size" {
   description = "Numbers of servers in ASG"
   default = {
-    min = "1"
-    max = "1"
-    desired = "1"
+    min = "2"
+    max = "2"
+    desired = "2"
   }
 }
 
@@ -90,5 +95,9 @@ variable "aws_efs_docker_volumes_mountpoint" {
 
 variable "mysql_password" {
   description = "Master DB password"
+}
+
+variable "rabbitmq_password" {
+  description = "Master RabbitMQ password"
 }
 

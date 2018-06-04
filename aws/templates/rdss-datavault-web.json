@@ -1,6 +1,12 @@
 [
   {
     "cpu": 256,
+    "environment": [
+      {
+        "name": "BROKER_HOST",
+        "value": "${broker_host}"
+      }
+    ],
     "essential": true,
     "image": "${image_url}",
     "logConfiguration": {
@@ -12,6 +18,11 @@
       }
     },
     "memory": 512,
-    "name": "${container_name}"
+    "name": "${container_name}",
+    "portMappings": [
+      {
+        "containerPort": 8080
+      }
+    ]
   }
 ]

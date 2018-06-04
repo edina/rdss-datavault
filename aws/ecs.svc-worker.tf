@@ -10,6 +10,8 @@ data "template_file" "task_definition_worker" {
     archive_bucket_name = "${aws_s3_bucket.archive.bucket}"
     mysql_host          = "${aws_db_instance.datavault.address}"
     mysql_password      = "${var.mysql_password}"
+    rabbitmq_host       = "${aws_route53_record.rdss_datavault_rabbitmq.fqdn}"
+    rabbitmq_password   = "${var.rabbitmq_password}"
     volume_name         = "datavault_working_data"
   }
 }
@@ -17,6 +19,8 @@ data "template_file" "task_definition_worker" {
 resource "aws_ecs_task_definition" "rdss_datavault_worker" {
   family                = "rdss-datavault-worker"
   container_definitions = "${data.template_file.task_definition_worker.rendered}"
+  network_mode          = "bridge"
+  task_role_arn         = "${aws_iam_role.ecs_task.arn}"
 
   # This volume has to be shared with the broker task, in order for the broker to access the metadata after the worker has updated it
   # That's a bug - the worker should instead send the metadata back via rabbitmq - once it's fixed the volume can be removed/unshared

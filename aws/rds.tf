@@ -8,6 +8,7 @@ resource "aws_db_instance" "datavault" {
   username               = "datavault"
   password               = "${var.mysql_password}"
   parameter_group_name   = "default.mysql5.7"
+  publicly_accessible    = true
   tags                   = "${var.aws_cost_tags}"
   vpc_security_group_ids = [ "${aws_security_group.rds.id}" ]
 }
@@ -23,5 +24,12 @@ resource "aws_security_group" "rds" {
     from_port       = 3306
     to_port         = 3306
     security_groups = [ "${aws_security_group.instance_sg.id}" ]
+  }
+
+  ingress {
+    protocol        = "tcp"
+    from_port       = 3306
+    to_port         = 3306
+    cidr_blocks     = [ "${var.aws_admin_cidr_ingress}" ]
   }
 }

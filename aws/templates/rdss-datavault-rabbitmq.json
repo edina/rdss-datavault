@@ -8,7 +8,7 @@
       },
       {
         "name": "RABBITMQ_DEFAULT_PASS",
-        "value": "efgh5678"
+        "value": "${rabbitmq_password}"
       }
     ],
     "essential": true,
@@ -28,6 +28,32 @@
         "containerPath": "/var/lib/rabbitmq"
       }
     ],
-    "name": "${container_name}"
+    "name": "${container_name}",
+    "portMappings": [
+      {
+        "containerPort": 4369,
+        "hostPort": 4369
+      },
+      {
+        "containerPort": 5671,
+        "hostPort": 5671
+      },
+      {
+        "containerPort": 5672,
+        "hostPort": 5672
+      },
+      {
+        "containerPort": 15671,
+        "hostPort": 15671
+      },
+      {
+        "containerPort": 15672,
+        "hostPort": 15672
+      },
+      {
+        "containerPort": 25672,
+        "hostPort": 25672
+      }
+    ]
   }
 ]

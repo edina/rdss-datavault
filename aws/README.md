@@ -60,11 +60,15 @@ We have (currently) one *ECS cluster*, rdss-datavault.
 This cluster is made up of *EC2* instances (The eu-west-2 region does not support the use of Fargate).
 These instances are created and managed by an *EC2 Auto Scaling Group*, which defines the desired number of instances, and the configuration each instance is launched with.
 When an instance is created, a launch script is executed which connects it to the ECS cluster.
-At present, the group has only a single instance, and it can only be scaled manually; no automatic scaling has been configured.
+At present, the group has two instances, and can only be scaled manually; no automatic scaling has been configured.
 
 Each of the four component parts of DataVault is defined as an *ECS task* which contains the relevant container, and each has a related *ECS service*.
 ECS ensures that there is always one task running for each service (if a tasks exits, it will be restarted), by deploying it to one of the instances in the cluster.
-At present, the containers cannot communicate between each other (and so several will not start cleanly).
+
+For communication between containers, and with the outside world, each service is associated with a *Load Balancer*, either an *Application Load Balancer* or a *Classic Load Balancer* as appropriate.
+Each Load Balancer has an associated *Route 53* entry, essentially a DNS name.
+When one container (e.g web) needs to communicate with another (e.g. broker), it uses this DNS name.
+The names are not resolveable externally.
 
 There is a MySQL database created using *RDS*, which the broker and workers communicate with.
 

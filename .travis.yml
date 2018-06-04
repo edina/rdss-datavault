@@ -12,7 +12,8 @@ install:
 script:
   # Validate our Ansible playbooks
   - python -myamllint -f parsable playbook.yml
-  - ansible-lint -p playbook.yml
+  # ANSIBLE0012 seems like it's usually good practice, but doesn't really suit our use case here - if we tell it to publish, we want it to publish
+  - ansible-lint -p playbook.yml -x ANSIBLE0012
   # TODO Add additional validation/build steps here
 
 notifications:
