@@ -103,6 +103,17 @@ Finally, there are also a number of *IAM* roles and policies in place to allow d
 
 Diagram (simplified): ![](aws.png)
 
+## Accessing the application
+
+Once it is running, the application can be accessed through the URL of the web load-balancer.
+This is currently http://rdss-datavault-web-lb-787974648.eu-west-1.elb.amazonaws.com/datavault-webapp/auth/login . 
+If the load-balancer is destroyed, this will change.
+You'll be able to find the new value through the AWS Console, under EC2 > Load Balancers > rdss-datavault-web-lb > DNS Name.
+
+This is only a temporary approach - we don't have an externally-accessible DNS zone, so the associated Route 53 entry for this load-balancer isn't any use.
+We've instead made the load-balancer externally available.
+Once this has been migrated to the main RDSS AWS account, we'll be able to remove this workaround.
+
 ## State
 
 The terraform state is stored within an S3 bucket, configured in `backend.tf`.
