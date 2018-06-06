@@ -12,21 +12,27 @@ You need [Terraform](https://www.terraform.io) and [AWS CLI](https://aws.amazon.
 
 Start setting up AWS CLI with your credentials an the preferrred region. Run the following command to introduce the preferred region, secret key, etc.:
 
-    $ aws configure
+    aws configure
 
 Initialise terraform:
 
-    $ terraform init
+    terraform init
 
 ## Usage
 
 Generate an execution plan for Terraform:
 
-    $ terraform plan
+    terraform plan
 
 Apply the changes:
 
-    $ terraform apply
+    terraform apply
+
+## Configuration
+
+At present, there is a small amount of configuration that has to occur after the system starts.
+Eventually, this should be removed, but until then this can be carried out by running the `./configure-storage.sh` script.
+This currently has to be run every time the broker is started (as the broker tears down and resets the database).
 
 ## Credentials
 
@@ -50,6 +56,11 @@ For more information, see:
 
 * https://www.terraform.io/docs/configuration/variables.html
 * https://docs.aws.amazon.com/cli/latest/userguide/cli-roles.html
+
+## Keys
+
+The VMs are loaded with a key-pair that can be used to allow SSH access to the user *ec2-user*.
+The public key is stored in this repo, but you'll need to obtain the private key from another developer.
 
 ## Architecture
 
@@ -89,6 +100,19 @@ There are three *Elastic Container Registry* (ECR) repositories.
 These store the three DataVault-specific Docker images (which are build and pushed from the top-level Makefile).
 
 Finally, there are also a number of *IAM* roles and policies in place to allow different components to take actions.
+
+Diagram (simplified): ![](aws.png)
+
+## Accessing the application
+
+Once it is running, the application can be accessed through the URL of the web load-balancer.
+This is currently http://rdss-datavault-web-lb-787974648.eu-west-1.elb.amazonaws.com/datavault-webapp/auth/login . 
+If the load-balancer is destroyed, this will change.
+You'll be able to find the new value through the AWS Console, under EC2 > Load Balancers > rdss-datavault-web-lb > DNS Name.
+
+This is only a temporary approach - we don't have an externally-accessible DNS zone, so the associated Route 53 entry for this load-balancer isn't any use.
+We've instead made the load-balancer externally available.
+Once this has been migrated to the main RDSS AWS account, we'll be able to remove this workaround.
 
 ## State
 
