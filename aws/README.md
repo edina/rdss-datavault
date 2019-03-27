@@ -53,6 +53,8 @@ For more information, see:
 
 ## Architecture
 
+![AWS Architecture](doc/rdss-datavault.png)
+
 DataVault is deployed on AWS using AWS *Elastic Container Service* (ECS).
 This is a tool for deploying Docker containers without concern for the physical machine they are located on, and integrates logging, service restarting, scaling etc.
 We have (currently) one *ECS cluster*, rdss-datavault.
